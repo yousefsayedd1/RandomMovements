@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Direction Guide</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f8ff;
+      }
+
+      .container {
+        margin-top: 50px;
+      }
+
+      .button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        margin: 10px;
+      }
+
+      .button:hover {
+        background-color: #45a049;
+      }
+
+      .direction {
+        margin-top: 20px;
+      }
+
+      .direction img {
+        width: 100px;
+        height: auto;
+      }
+
+      .speed-control {
+        margin-top: 20px;
+        font-size: 18px;
+      }
+
+      .speed-control input {
+        width: 60px;
+        font-size: 16px;
+        text-align: center;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Random Direction Sound Guide</h1>
+      <button class="button" onclick="startRandomDirections()">Start</button>
+      <button
+        class="button"
+        onclick="stopRandomDirections()"
+        style="background-color: #f44336"
+      >
+        Stop
+      </button>
+      <div class="speed-control">
+        <label for="speed">Speed (ms):</label>
+        <input type="number" id="speed" value="2000" min="500" />
+      </div>
+      <div class="direction" id="directionDisplay"></div>
+    </div>
+
+    <script>
+      const directions = [
+        { img: "up-arrow.png", audio: "front.m4a" }, // Replace with the actual URL of your up arrow image
+        { img: "down-arrow.png", audio: "back.m4a" }, // Replace with the actual URL of your down arrow image
+        { img: "right-arrow.png", audio: "right.m4a" }, // Replace with the actual URL of your right arrow image
+        { img: "left-arrow.png", audio: "left.m4a" }, // Replace with the actual URL of your left arrow image
+      ];
+
+      let intervalId = null;
+
+      function playRandomDirection() {
+        // Pick a random direction
+        const randomIndex = Math.floor(Math.random() * directions.length);
+        const randomDirection = directions[randomIndex];
+
+        // Display the direction image
+        const directionDisplay = document.getElementById("directionDisplay");
+        directionDisplay.innerHTML = `<img src="${randomDirection.img}" alt="Direction Arrow" />`;
+
+        // Play the corresponding sound
+        const audio = new Audio(randomDirection.audio);
+        audio.play();
+      }
+
+      function startRandomDirections() {
+        const speedInput = document.getElementById("speed");
+        const speed = parseInt(speedInput.value, 10) || 2000;
+
+        if (!intervalId) {
+          intervalId = setInterval(playRandomDirection, speed); // Use the user-defined speed
+        }
+      }
+
+      function stopRandomDirections() {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    </script>
+  </body>
+</html>
